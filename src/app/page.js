@@ -8,7 +8,14 @@ function AboutUs() {
 }
 
 function Members() {
-  <div>todo</div>
+  
+
+  return (
+    <>
+    <img src="todo"></img>
+    <div>todo</div>
+    </>
+  )
 }
 
 function Events() {
@@ -22,6 +29,12 @@ function Impressum() {
 
 export default function Home() {
   return (
-    <Test />
+    <>
+    <TopBar />
+    <AboutUs />
+    <Members />
+    <Events />
+    <Impressum />
+    </>
   ); 
 }
