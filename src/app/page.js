@@ -1,4 +1,6 @@
 import membersData from './members.json';
+import privacyPolicyText from './privacyPolicy';
+//import React, { useState } from 'react';
 
 function TopBar() {
   <div>todo</div>
@@ -49,9 +51,28 @@ function Events() {
   </div>)
 }
 
-function Impressum() {
-  <div>todo</div>
+function Imprint() {
+  //const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
+
+  return (
+    <div className="flex flex-wrap justify-center gap-x-6 text-sm p-4">
+      <div>Verantwortlich für die Inhalte dieser Website: Mynds GbR</div>
+      <div>Max Mustermann</div>
+      <div> Musterstraße 1, 12345 Musterstadt</div>
+      <div href="mailto:info@myndsgbr.de" className="hover:font-underline">info@myndsgbr.de</div>
+      <div>Vertretungsberechtigt: Max Mustermann, Erika Mustermann</div>
+      
+    </div>
+  );
 }
+/*
+<button 
+        className="text-blue-500 hover:text-blue-800" 
+        onClick={() => setShowPrivacyPolicy(!showPrivacyPolicy)}>
+        Datenschutzerklärung
+      </button>
+      {showPrivacyPolicy && <div className="mt-2">{privacyPolicyText}</div>}
+*/
 
 
 export default function Home() {
