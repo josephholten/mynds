@@ -55,14 +55,21 @@ function Imprint() {
   //const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
 
   return (
+    <div className='gap-y-1'>
     <div className="flex flex-wrap justify-center gap-x-6 text-sm p-4">
       <div>Verantwortlich für die Inhalte dieser Website: Mynds GbR</div>
       <div>Max Mustermann</div>
       <div> Musterstraße 1, 12345 Musterstadt</div>
-      <div href="mailto:info@myndsgbr.de" className="hover:font-underline">info@myndsgbr.de</div>
+      <a href="mailto:info@myndsgbr.de" className="hover:underline">info@myndsgbr.de</a>
       <div>Vertretungsberechtigt: Max Mustermann, Erika Mustermann</div>
       
     </div>
+     <div className="flex flex-wrap justify-center text-sm p-4 gap-x-1">
+     <div>Website erstellt von: </div>
+     <a href="http://hirsch.holten.com" className='hover:underline'>Hirsch & Holten GbR</a>
+     <a href="mailto:hirsch@holten.com" className="hover:underline">(Kontakt)</a>
+   </div>
+   </div>
   );
 }
 /*
