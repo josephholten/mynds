@@ -1,6 +1,5 @@
 import membersData from './members.json';
-import privacyPolicyText from './privacyPolicy';
-//import React, { useState } from 'react';
+import Link from 'next/link';
 
 function TopBar() {
   <div>todo</div>
@@ -52,8 +51,6 @@ function Events() {
 }
 
 function Imprint() {
-  //const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
-
   return (
     <div className='gap-y-1'>
     <div className="flex flex-wrap justify-center gap-x-6 text-sm p-4">
@@ -62,7 +59,7 @@ function Imprint() {
       <div> Musterstraße 1, 12345 Musterstadt</div>
       <a href="mailto:info@myndsgbr.de" className="hover:underline">info@myndsgbr.de</a>
       <div>Vertretungsberechtigt: Max Mustermann, Erika Mustermann</div>
-      
+      <Link href="/privacy" className="hover:underline">Datenschutzerklärung</Link>
     </div>
      <div className="flex flex-wrap justify-center text-sm p-4 gap-x-1">
      <div>Website erstellt von: </div>
@@ -72,14 +69,6 @@ function Imprint() {
    </div>
   );
 }
-/*
-<button 
-        className="text-blue-500 hover:text-blue-800" 
-        onClick={() => setShowPrivacyPolicy(!showPrivacyPolicy)}>
-        Datenschutzerklärung
-      </button>
-      {showPrivacyPolicy && <div className="mt-2">{privacyPolicyText}</div>}
-*/
 
 
 export default function Home() {
