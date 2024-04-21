@@ -1,4 +1,5 @@
 import membersData from './members.json';
+import eventsData from './events.json';
 import Link from 'next/link';
 
 function TopBar() {
@@ -27,7 +28,7 @@ function Members() {
     <div className="flex flex-col items-center">
       <div className="font-bold text-center text-xl">{member.name}</div>
       <div className="italic text-base text-center text-lg">{member.role}</div>
-      <img src={member.img_src} alt="member" className="h-36 w-36 object-cover rounded-full mt-5 mb-3"></img>
+      <img src={"/people/"+member.img_src} alt="member" className="h-36 w-36 object-cover rounded-full mt-5 mb-3"></img>
       <div>{member.description}</div> 
     </div>
   )) //description: 1) delete 2) ein/ausklappen 3) link to site with description 4) keep like this
@@ -43,15 +44,65 @@ function Members() {
 }
 
 function Events() {
-  return (<div>
-    These are our events:
-    <div>Event1</div>
-    <div>Event2</div>
-  </div>)
-}
+  const currentDate = new Date();
+  currentDate.setHours(0, 0, 0, 0);
+  const eventsDataPast = eventsData.filter(event => {
+    const [day, month, year] = event.date.split(".");
+    const eventDate = new Date(`${year}-${month}-${day}`);
+    return eventDate < currentDate;
+  });
+
+  const eventsDataFuture = eventsData.filter(event => {
+    const [day, month, year] = event.date.split(".");
+    const eventDate = new Date(`${year}-${month}-${day}`);
+    return eventDate >= currentDate;
+  });
+
+  const eventsPast = eventsDataPast.map(event => (
+    <div className="flex flex-col items-center">
+      <Link href={`/event/${event.name.replace(/\s+/g, '-').toLowerCase()}`}>
+        <div className="font-bold text-center text-xl">{event.name}</div>
+        <div className="italic text-base text-center text-lg">{event.date}</div>
+        <img src={"/events/"+event.img_src[0]} alt="member" className="h-36 w-36 object-cover rounded-lg mt-5 mb-3"></img>
+        <div>{event.description_past}</div> 
+      </Link>
+    </div>
+  ))
+
+  const eventsFuture = eventsDataFuture.map(event => (
+    <div className="flex flex-col items-center">
+      <div className="font-bold text-center text-xl">{event.name}</div>
+      <div className="italic text-base text-center text-lg">{event.date}</div>
+      <img src={"/events/"+event.img_src[0]} alt="member" className="h-36 w-36 object-cover rounded-lg mt-5 mb-3"></img>
+      <div>{event.description}</div> 
+    </div>
+  ))
+  
+  var eventsFutureHTML = ""
+  if (eventsFuture != ""){
+    eventsFutureHTML = (
+    <>
+      <div className="text-center font-bold text-2xl mb-5">We look forward to meeting you at these events!</div>
+      <div className="flex flex-wrap justify-center gap-6">
+        {eventsFuture}
+      </div>
+    </>
+  )}
+
+  return (
+    <>
+    <div className="text-center font-bold text-2xl mb-5">Our past success stories:</div>
+    <div className="flex flex-wrap justify-center gap-6">
+      {eventsPast}
+    </div>
+    {eventsFutureHTML}
+    </>
+)}
 
 function Imprint() {
   return (
+    <div>
+    <div className="text-center font-bold text-xl my-2">Impressum</div>
     <div className='gap-y-1'>
     <div className="flex flex-wrap justify-center gap-x-6 text-sm p-4">
       <div>Verantwortlich für die Inhalte dieser Website: Mynds GbR</div>
@@ -65,6 +116,7 @@ function Imprint() {
      <div>Website erstellt von: </div>
      <a href="http://hirsch.holten.com" className='hover:underline'>Hirsch & Holten GbR</a>
      <a href="mailto:hirsch@holten.com" className="hover:underline">(Kontakt)</a>
+   </div>
    </div>
    </div>
   );
