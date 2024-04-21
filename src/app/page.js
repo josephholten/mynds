@@ -89,7 +89,7 @@ export default function Home() {
       <AboutUs />
       <Members />
       <Events />
-      <Impressum />
+      <Imprint />
     </div>
   ); 
 }
