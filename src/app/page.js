@@ -23,18 +23,21 @@ function AboutUs() {
 
 function Members() {
   const members = membersData.map(member => (
-    <div className="flex flex-col items-center space-y-2">
-    <div className="font-bold text-center text-lg">{member.name}</div>
-    <div className="italic text-base text-center">{member.role}</div>
-    <img src={member.img_src} alt="member" className="h-24 w-24 object-cover rounded-full"></img>
-    <div>{member.description}</div>
-  </div>
-  ))
+    <div className="flex flex-col items-center">
+      <div className="font-bold text-center text-xl">{member.name}</div>
+      <div className="italic text-base text-center text-lg">{member.role}</div>
+      <img src={member.img_src} alt="member" className="h-36 w-36 object-cover rounded-full mt-5 mb-3"></img>
+      <div>{member.description}</div> 
+    </div>
+  )) //description: 1) delete 2) ein/ausklappen 3) link to site with description 4) keep like this
 
   return (
-    <div className="flex flex-wrap justify-center gap-4">
-    {members}
-  </div>
+    <>
+    <div className="text-center font-bold text-2xl mb-5">Meet our Team!</div>
+    <div className="flex flex-wrap justify-center gap-6">
+      {members}
+    </div>
+    </>
   )
 }
 
