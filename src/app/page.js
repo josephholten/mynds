@@ -1,10 +1,3 @@
-import Image from "next/image";
-
-function Test() {
-  return (
-    <div>Test!</div>  
-  )
-}
 
 function TopBar() {
   <div>todo</div>
