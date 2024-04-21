@@ -1,0 +1,26 @@
+[
+    {
+        "name": "Max Hirsch",
+        "role": "CEO",
+        "img_src": "/max.png",
+        "description": "Max ist voll cool."
+    },
+    {
+        "name": "Joseph Holten",
+        "role": "CEO",
+        "img_src": "/joseph.png",
+        "description": "Joseph ist voll cool."
+    },
+    {
+        "name": "Max2 Hirsch",
+        "role": "CFO",
+        "img_src": "/max.png",
+        "description": "Max ist voll doof."
+    },
+    {
+        "name": "Joseph2 Holten",
+        "role": "Intern",
+        "img_src": "/joseph.png",
+        "description": "Joseph ist voll doof."
+    }
+]
