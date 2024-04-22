@@ -94,7 +94,7 @@ function Events() {
   return (
     <>
     <div className="text-center font-bold text-2xl mb-5">Our past success stories:</div>
-    <div className="flex flex-wrap justify-center gap-6">
+    <div className="flex flex-wrap justify-center gap-6 mb-12">
       {eventsPast}
     </div>
     {eventsFutureHTML}
