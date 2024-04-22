@@ -71,10 +71,12 @@ function Events() {
 
   const eventsFuture = eventsDataFuture.map(event => (
     <div className="flex flex-col items-center">
-      <div className="font-bold text-center text-xl">{event.name}</div>
-      <div className="italic text-base text-center text-lg">{event.date}</div>
-      <img src={"/events/"+event.img_src[0]} alt="member" className="h-36 w-36 object-cover rounded-lg mt-5 mb-3"></img>
-      <div>{event.description}</div> 
+      <Link href={`/event/${event.name.replace(/\s+/g, '-').toLowerCase()}`}>
+        <div className="font-bold text-center text-xl">{event.name}</div>
+        <div className="italic text-base text-center text-lg">{event.date}</div>
+        <img src={"/events/"+event.img_src[0]} alt="member" className="h-36 w-36 object-cover rounded-lg mt-5 mb-3"></img>
+        <div>{event.description}</div> 
+      </Link>
     </div>
   ))
   
