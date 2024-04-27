@@ -8,7 +8,10 @@
         ],
         "description": "Wir werden viel Spaß haben. ",
         "description_past": "Wir hatten viel Spaß!",
-        "registration_url": "google.com"
+        "registration_url": "google.com",
+        "startTime": "19:00",
+        "endTime": "21:00",
+        "location": "Mars"
     },
     {
         "name": "Hangout",
@@ -18,7 +21,10 @@
         ],
         "description": "We will hang out.",
         "description_past": "Wir hatten viel Spaß!",
-        "registration_url": "google.com"
+        "registration_url": "google.com",
+        "startTime": "19:00",
+        "endTime": "21:00",
+        "location": "Mars"
     },
     {
         "name": "Hangout 2",
@@ -28,6 +34,9 @@
         ],
         "description": "We will hang out again.",
         "description_past": "Wir hatten viel Spaß!",
-        "registration_url": "google.com"
+        "registration_url": "google.com",
+        "startTime": "19:00",
+        "endTime": "21:00",
+        "location": "Mars"
     }
 ]

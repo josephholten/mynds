@@ -59,46 +59,43 @@ function Events() {
   });
 
   const eventsPast = eventsDataPast.map(event => (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center w-5/12">
       <Link href={`/event/${event.name.replace(/\s+/g, '-').toLowerCase()}`}>
         <div className="font-bold text-center text-xl">{event.name}</div>
-        <div className="italic text-base text-center text-lg">{event.date}</div>
-        <img src={"/events/"+event.img_src[0]} alt="member" className="h-36 w-36 object-cover rounded-lg mt-5 mb-3"></img>
+        <div className="italic text-center text-lg">{event.date}</div>
+        <img src={"/events/"+event.img_src[0]} alt="member" className="w-full object-contain rounded-lg mt-5 mb-3"></img>
         <div>{event.description_past}</div> 
       </Link>
     </div>
   ))
 
   const eventsFuture = eventsDataFuture.map(event => (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center w-5/12">
       <Link href={`/event/${event.name.replace(/\s+/g, '-').toLowerCase()}`}>
         <div className="font-bold text-center text-xl">{event.name}</div>
-        <div className="italic text-base text-center text-lg">{event.date}</div>
-        <img src={"/events/"+event.img_src[0]} alt="member" className="h-36 w-36 object-cover rounded-lg mt-5 mb-3"></img>
+        <div className="italic text-center text-lg">{event.date}</div>
+        <img src={"/events/"+event.img_src[0]} alt="member" className="w-full object-contain rounded-lg mt-5 mb-3"></img>
         <div>{event.description}</div> 
       </Link>
     </div>
   ))
   
-  var eventsFutureHTML = ""
-  if (eventsFuture != ""){
-    eventsFutureHTML = (
-    <>
-      <div className="text-center font-bold text-2xl mb-5">We look forward to meeting you at these events!</div>
-      <div className="flex flex-wrap justify-center gap-6">
-        {eventsFuture}
-      </div>
-    </>
-  )}
+  const eventsFutureHTML = (
+  <>
+    <div className="text-center font-bold text-2xl mb-5">We look forward to meeting you at these events!</div>
+    <div className="flex flex-wrap justify-center gap-6">
+      {eventsFuture}
+    </div>
+  </>)
 
   return (
-    <>
+    <div>
+    {eventsFuture.length !== 0 && eventsFutureHTML}
     <div className="text-center font-bold text-2xl mb-5">Our past success stories:</div>
     <div className="flex flex-wrap justify-center gap-6 mb-12">
       {eventsPast}
     </div>
-    {eventsFutureHTML}
-    </>
+    </div>
 )}
 
 function Imprint() {
