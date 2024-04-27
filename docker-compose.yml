@@ -1,0 +1,14 @@
+version: "3.3"
+
+services:
+  mynds:
+    build: .
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.familienchronik.rule=Host(`mynds.hirsch.ee`)"
+    networks:
+      - traefik
+
+networks:
+  traefik:
+     external: true
