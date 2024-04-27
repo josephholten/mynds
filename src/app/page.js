@@ -6,6 +6,10 @@ function TopBar() {
   <div>todo</div>
 }
 
+function Headline({children}) {
+  return(<div className="text-center font-bold text-2xl mb-5">{children}</div>)
+}
+
 function AboutUs() {
   return (<div className='flex justify-center'>
     <div className="w-1/12 flex flex-col justify-end">
@@ -42,31 +46,28 @@ function Members() {
   )) //description: 1) delete 2) ein/ausklappen 3) link to site with description 4) keep like this
 
   return (
-    <>
-    <div className="text-center font-bold text-2xl mb-5">Meet our Team!</div>
+    <div>
+    <Headline>Meet our team!</Headline>
     <div className="flex flex-wrap justify-center gap-6">
       {members}
     </div>
-    </>
+    </div>
   )
 }
 
 function Events() {
   const currentDate = new Date();
   currentDate.setHours(0, 0, 0, 0);
-  const eventsDataPast = eventsData.filter(event => {
-    const [day, month, year] = event.date.split(".");
-    const eventDate = new Date(`${year}-${month}-${day}`);
-    return eventDate < currentDate;
-  });
 
-  const eventsDataFuture = eventsData.filter(event => {
-    const [day, month, year] = event.date.split(".");
-    const eventDate = new Date(`${year}-${month}-${day}`);
-    return eventDate >= currentDate;
-  });
+  const parseDate = (datestr) => {
+    const [day, month, year] = datestr.split(".");
+    return new Date(`${year}-${month}-${day}`);
+  }
 
-  const eventsPast = eventsDataPast.map(event => (
+  const eventsDataPast = eventsData.filter(event => parseDate(event.date) < currentDate)
+  const eventsDataFuture = eventsData.filter(event => parseDate(event.date) >= currentDate)
+
+  const formatEvent = (event) => (
     <div className="flex flex-col items-center w-5/12">
       <Link href={`/event/${event.name.replace(/\s+/g, '-').toLowerCase()}`}>
         <div className="font-bold text-center text-xl">{event.name}</div>
@@ -75,22 +76,14 @@ function Events() {
         <div>{event.description_past}</div> 
       </Link>
     </div>
-  ))
+  )
 
-  const eventsFuture = eventsDataFuture.map(event => (
-    <div className="flex flex-col items-center w-5/12">
-      <Link href={`/event/${event.name.replace(/\s+/g, '-').toLowerCase()}`}>
-        <div className="font-bold text-center text-xl">{event.name}</div>
-        <div className="italic text-center text-lg">{event.date}</div>
-        <img src={"/events/"+event.img_src[0]} alt="member" className="w-full object-contain rounded-lg mt-5 mb-3"></img>
-        <div>{event.description}</div> 
-      </Link>
-    </div>
-  ))
+  const eventsPast = eventsDataPast.map(event => formatEvent(event))
+  const eventsFuture = eventsDataFuture.map(event => formatEvent(event))
   
   const eventsFutureHTML = (
   <>
-    <div className="text-center font-bold text-2xl mb-5">We look forward to meeting you at these events!</div>
+    <Headline>We look forward to meeting you at these events!</Headline>
     <div className="flex flex-wrap justify-center gap-6">
       {eventsFuture}
     </div>
@@ -98,46 +91,41 @@ function Events() {
 
   return (
     <div>
-    {eventsFuture.length !== 0 && eventsFutureHTML}
-    <div className="text-center font-bold text-2xl mb-5">Our past success stories:</div>
-    <div className="flex flex-wrap justify-center gap-6 mb-12">
-      {eventsPast}
-    </div>
+      {eventsFuture.length !== 0 && eventsFutureHTML}
+      <Headline>Our past success stories:</Headline>
+      <div className="flex flex-wrap justify-center gap-6">
+        {eventsPast}
+      </div>
     </div>
 )}
 
 function Imprint() {
-  return (
-    <div>
-    <div className="text-center font-bold text-xl my-2">Impressum</div>
-    <div className='gap-y-1'>
-    <div className="flex flex-wrap justify-center gap-x-6 text-sm p-4">
-      <div>Verantwortlich für die Inhalte dieser Website: Mynds GbR</div>
-      <div>Max Mustermann</div>
-      <div> Musterstraße 1, 12345 Musterstadt</div>
-      <a href="mailto:info@myndsgbr.de" className="hover:underline">info@myndsgbr.de</a>
-      <div>Vertretungsberechtigt: Max Mustermann, Erika Mustermann</div>
-      <Link href="/privacy" className="hover:underline">Datenschutzerklärung</Link>
-    </div>
-     <div className="flex flex-wrap justify-center text-sm p-4 gap-x-1">
-     <div>Website erstellt von: </div>
-     <a href="http://hirsch.holten.com" className='hover:underline'>Hirsch & Holten GbR</a>
-     <a href="mailto:hirsch@holten.com" className="hover:underline">(Kontakt)</a>
-   </div>
-   </div>
-   </div>
-  );
+  return (<div>
+    <div className="text-center font-bold text-xl">Impressum</div>
+      <div className="flex flex-wrap justify-center gap-x-6 text-sm">
+        <div>Verantwortlich für die Inhalte dieser Website: Mynds GbR</div>
+        <div>Max Mustermann</div>
+        <div> Musterstraße 1, 12345 Musterstadt</div>
+        <a href="mailto:info@myndsgbr.de" className="hover:underline">info@myndsgbr.de</a>
+        <div>Vertretungsberechtigt: Max Mustermann, Erika Mustermann</div>
+        <Link href="/privacy" className="hover:underline">Datenschutzerklärung</Link>
+      </div>
+  </div>)
 }
 
 
 export default function Home() {
   return (
-    <div className='flex flex-col gap-4 px-10 py-4 items-center'>
+    <div className='flex flex-col gap-10 px-10 py-4 items-center'>
       <TopBar />
       <AboutUs />
-      <Members />
       <Events />
+      <Members />
       <Imprint />
+      <div className="flex flex-wrap justify-center text-sm gap-x-1">
+        <div>Website erstellt von </div>
+        <a href="http://hirsch.holten.com" className='hover:underline'>Hirsch & Holten GbR</a>
+      </div>
     </div>
   ); 
 }
