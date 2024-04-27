@@ -111,6 +111,7 @@ export default function EventPage({ event }){
     }
   });
 
+<<<<<<< HEAD
   return (
     <>
       <div className="flex flex-col items-center">
@@ -133,3 +134,28 @@ export default function EventPage({ event }){
       </div>
     </>
 )}
+=======
+
+return (
+    <div className='flex flex-col gap-2 px-10 py-4 items-center'>
+      <div className="font-bold text-center text-xl">{event.name}</div>
+      <div className="italic text-base text-center text-lg">{event.date}</div>
+      {eventInPast ? (
+          <div>{event.description_past}</div>
+        ) : (
+          <>
+            <div>{event.description}</div>
+            <div>Melde dich <a href={event.registration_url} className="underline">hier</a> für das Event an</div>
+            {calendarHTML}
+          </>
+        )}
+        <div className="gap-6 max-w-screen-sm">
+            {event.img_src.map(img => (
+              <div className="max-w-screen-sm px-2">
+                <img src={"/events/"+img} alt={`Bilder von ${event.name}`} width="100%" className="object-contain rounded-lg "></img>
+              </div>
+            ))}
+        </div>
+    </div>
+)}
+>>>>>>> f49771c (image scaling on events pages)
