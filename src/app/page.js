@@ -7,18 +7,26 @@ function TopBar() {
 }
 
 function AboutUs() {
-  return (<div>
-    <div>
-      Our mission is to empower female students in
-      business and economics, removing obstacles and
-      fostering a gender-inclusive environment through
-      mentorship, education, and community support.
+  return (<div className='flex justify-center'>
+    <div className="w-1/12 flex flex-col justify-end">
+      <img src="/quote-open.svg" />
     </div>
-    <div>
-      We are dedicated to a future where business and
-      economics leaders mirror our diverse society, with
-      female students fully supported to thrive in an equal
-      professional world
+    <div className='italic font-bold text-lg text-center w-8/12'>
+      <div>
+        Our mission is to empower female students in
+        business and economics, removing obstacles and
+        fostering a gender-inclusive environment through
+        mentorship, education, and community support.
+      </div>
+      <div>
+        We are dedicated to a future where business and
+        economics leaders mirror our diverse society, with
+        female students fully supported to thrive in an equal
+        professional world
+      </div>
+    </div>
+    <div className='w-1/12'>
+      <img src="/quote-close.svg"></img>
     </div>
   </div>)
 }
@@ -124,7 +132,7 @@ function Imprint() {
 
 export default function Home() {
   return (
-    <div className='flex flex-col gap-4 px-10 py-4'>
+    <div className='flex flex-col gap-4 px-10 py-4 items-center'>
       <TopBar />
       <AboutUs />
       <Members />
