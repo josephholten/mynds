@@ -63,15 +63,10 @@ function CalendarLink({ eventData }) {
     document.body.removeChild(link);
   };
 
-  <button onClick={handleAddEvent}>Add to Apple Calendar</button>
-
   return (
     <div className="flex flex-wrap justify-center gap-x-6 text-sm p-4">
       <div onClick={() => window.open(googleUrl, '_blank')} className="">
         Add to Google Calendar
-      </div>
-      <div onClick={() => window.open(microsoftUrl, '_blank')} className="">
-        Add to Microsoft Calendar
       </div>
       <div onClick={handleAddEvent}>
         Add to Apple Calendar
