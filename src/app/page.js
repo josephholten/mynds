@@ -37,10 +37,10 @@ function AboutUs() {
 
 function Members() {
   const members = membersData.map(member => (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center" key={member.name}>
       <div className="font-bold text-center text-xl">{member.name}</div>
       <div className="italic text-base text-center text-lg">{member.role}</div>
-      <img src={"/people/"+member.img_src} alt="member" className="h-36 w-36 object-cover rounded-full mt-5 mb-3"></img>
+      <img src={"/people/"+member.img_src} key={member.name} alt="member" className="h-36 w-36 object-cover rounded-full mt-5 mb-3"></img>
       <div>{member.description}</div> 
     </div>
   )) //description: 1) delete 2) ein/ausklappen 3) link to site with description 4) keep like this
@@ -68,7 +68,7 @@ function Events() {
   const eventsDataFuture = eventsData.filter(event => parseDate(event.date) >= currentDate)
 
   const formatEvent = (event) => (
-    <div className="flex flex-col items-center w-5/12">
+    <div className="flex flex-col items-center w-5/12" key={event.date}>
       <Link href={`/event/${event.name.replace(/\s+/g, '-').toLowerCase()}`}>
         <div className="font-bold text-center text-xl">{event.name}</div>
         <div className="italic text-center text-lg">{event.date}</div>
@@ -80,7 +80,7 @@ function Events() {
 
   const eventsPast = eventsDataPast.map(event => formatEvent(event))
   const eventsFuture = eventsDataFuture.map(event => formatEvent(event))
-  
+
   const eventsFutureHTML = (
   <>
     <Headline>We look forward to meeting you at these events!</Headline>

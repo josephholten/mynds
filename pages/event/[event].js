@@ -118,7 +118,7 @@ export default function EventPage({ event }){
         <div className="italic text-base text-center text-lg">{event.date}</div>
         <div className="flex flex-wrap justify-center gap-6">
           {event.img_src.map(img => (
-            <img src={"/events/"+img} alt="member" className="h-36 w-36 object-cover rounded-lg mt-5 mb-3"></img>
+            <img src={"/events/"+img} key={event.date} alt="member" className="h-36 w-36 object-cover rounded-lg mt-5 mb-3"></img>
           ))}
         </div>
         {eventInPast ? (
