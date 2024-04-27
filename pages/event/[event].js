@@ -1,5 +1,6 @@
 import "/src/app/globals.css";
 import events from '/src/app/events.json';
+import { useRouter } from 'next/router';
 
 
 function DateReformater(date) {
@@ -8,31 +9,73 @@ function DateReformater(date) {
   return `${parts[2]}-${parts[1]}-${parts[0]}`;
 }
 
-function CalendarLink({ event }) {
-  const { title, description, startTime, endTime, location } = event;
+function CalendarLink({ eventData }) {
+  const router = useRouter();
+  const { event } = router.query;
+
+  const { title, description, startTime, endTime, location } = eventData;
 
   const formatTime = (time) => time.replace(/-|:|\.\d\d\d/g, '');
 
-  console.log(startTime)
-  console.log(endTime)
-  console.log(formatTime(startTime))
-  console.log(formatTime(endTime))
-
   const googleUrl = `https://calendar.google.com/calendar/r/eventedit?text=${encodeURIComponent(title)}&dates=${formatTime(startTime)}/${formatTime(endTime)}&details=${encodeURIComponent(description)}&location=${encodeURIComponent(location)}`;
-
   const microsoftUrl = `https://outlook.live.com/owa/?path=/calendar/action/compose&rru=addevent&startdt=${formatTime(startTime)}&enddt=${formatTime(endTime)}&subject=${encodeURIComponent(title)}&body=${encodeURIComponent(description)}&location=${encodeURIComponent(location)}`;
 
-  // Note: Implement .ics file creation for Apple iCal integration in a real app scenario
+  // Apple ics file:
+  function handleAddEvent() {
+    const eventICS = [
+      'BEGIN:VCALENDAR',
+      'VERSION:2.0',
+      'BEGIN:VTIMEZONE',
+      'TZID:Europe/Berlin', //all the following is just time zone stuff
+      'BEGIN:STANDARD',
+      'DTSTART:19961027T030000',
+      'RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU',
+      'TZOFFSETFROM:+0200',
+      'TZOFFSETTO:+0100',
+      'TZNAME:CET',
+      'END:STANDARD',
+      'BEGIN:DAYLIGHT',
+      'DTSTART:19810329T020000',
+      'RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU',
+      'TZOFFSETFROM:+0100',
+      'TZOFFSETTO:+0200',
+      'TZNAME:CEST',
+      'END:DAYLIGHT',
+      'END:VTIMEZONE',
+      'BEGIN:VEVENT', //now event stuff
+      `URL:localhost:3000/events/${event}`,
+      `DTSTART;TZID=Europe/Berlin:${formatTime(startTime).split("+")[0]}`,
+      `DTEND;TZID=Europe/Berlin:${formatTime(endTime).split("+")[0]}`,  
+      `SUMMARY:${title}`,    // Event title
+      `DESCRIPTION:${description}`, 
+      `LOCATION:${location}`, 
+      'END:VEVENT',
+      'END:VCALENDAR'
+    ].join('\r\n');
+
+    const blob = new Blob([eventICS], { type: 'text/calendar;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', 'event.ics');  // Set the file name for the download
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  <button onClick={handleAddEvent}>Add to Apple Calendar</button>
 
   return (
-    <div className="p-4 bg-blue-500 text-white rounded-lg cursor-pointer">
-      <div onClick={() => window.open(googleUrl, '_blank')} className="mb-2">
+    <div className="flex flex-wrap justify-center gap-x-6 text-sm p-4">
+      <div onClick={() => window.open(googleUrl, '_blank')} className="">
         Add to Google Calendar
       </div>
-      <div onClick={() => window.open(microsoftUrl, '_blank')} className="mb-2">
+      <div onClick={() => window.open(microsoftUrl, '_blank')} className="">
         Add to Microsoft Calendar
       </div>
-      {/* Apple Calendar link would go here */}
+      <div onClick={handleAddEvent}>
+        Add to Apple Calendar
+      </div>
     </div>
   );
 };
@@ -64,7 +107,7 @@ export default function EventPage({ event }){
   }
 
   const calendarHTML = CalendarLink({
-    event: {
+    eventData: {
       title: event.name, 
       description: event.description, 
       startTime: DateReformater(event.date)+"T"+event.startTime+":00+02:00",
