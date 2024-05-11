@@ -3,7 +3,7 @@ import eventsData from './events.json';
 import Link from 'next/link';
 
 function TopBar() {
-  return (<div className='flex justify-end gap-x-10 underline font-bold w-full max-w-screen-lg topbar py-5'>
+  return (<div className='flex justify-end gap-x-10 underline font-bold w-full max-w-screen-lg topbar py-5 px-10'>
     <a href="#about">About Us</a>
     <a href="#events">Events</a>
     <a href="#team">Team</a>
@@ -157,7 +157,7 @@ function JoinUs(props) {
 export default function Home() {
   return (<div className='flex flex-col items-center'>
     <TopBar />
-    <div className='flex flex-col gap-10 items-center mt-16 max-w-screen-lg'>
+    <div className='flex flex-col gap-10 items-center mx-10 mt-16 max-w-screen-lg'>
       <div className='flex justify-center'>
         <img src="/header_cut.svg" className='h-auto max-w-full' />
       </div>
