@@ -3,19 +3,23 @@ import eventsData from './events.json';
 import Link from 'next/link';
 
 function TopBar() {
-  <div>todo</div>
+  return (<div className='flex justify-end gap-x-10 underline font-bold w-full max-w-screen-lg topbar py-5'>
+    <a href="#about">About Us</a>
+    <a href="#events">Events</a>
+    <a href="#team">Team</a>
+  </div>)
 }
 
-function Headline({children}) {
-  return(<div className="text-center font-bold text-2xl mb-5">{children}</div>)
+function Headline({ children }) {
+  return (<div className="text-center font-bold text-2xl mb-5">{children}</div>)
 }
 
-function AboutUs() {
-  return (<div className='flex justify-center'>
-    <div className="w-1/12 flex flex-col justify-end">
+function AboutUs(props) {
+  return (<div className='flex justify-center py-5' {...props}>
+    <div className="w-20 flex flex-col justify-end">
       <img src="/quote-open.svg" />
     </div>
-    <div className='italic font-bold text-lg text-center w-8/12'>
+    <div className='italic font-bold text-lg text-center max-w-prose'>
       <div>
         Our mission is to empower female students in
         business and economics, removing obstacles and
@@ -29,33 +33,42 @@ function AboutUs() {
         professional world
       </div>
     </div>
-    <div className='w-1/12'>
+    <div className='w-20'>
       <img src="/quote-close.svg"></img>
     </div>
   </div>)
 }
 
-function Members() {
-  const members = membersData.map(member => (
-    <div className="flex flex-col items-center" key={member.name}>
-      <div className="font-bold text-center text-xl">{member.name}</div>
-      <div className="italic text-base text-center text-lg">{member.role}</div>
-      <img src={"/people/"+member.img_src} key={member.name} alt="member" className="h-36 w-36 object-cover rounded-full mt-5 mb-3"></img>
-      <div>{member.description}</div> 
-    </div>
-  )) //description: 1) delete 2) ein/ausklappen 3) link to site with description 4) keep like this
-
+function Team(props) {
+  //description: 1) delete 2) ein/ausklappen 3) link to site with description 4) keep like this
   return (
-    <div>
-    <Headline>Meet our team!</Headline>
-    <div className="flex flex-wrap justify-center gap-6">
-      {members}
-    </div>
+    <div className='flex flex-col items-center w-full py-5' {...props}>
+      <Headline>Meet our team!</Headline>
+      <div className="grid grid-cols-3 gap-14">
+        {membersData.map(member => (
+          <div className="flex flex-col items-center" key={member.name}>
+            <div className="font-bold text-center text-xl">{member.name}</div>
+            <div className="italic text-center text-lg">{member.role}</div>
+            <img src={"/people/" + member.img_src} key={member.name} alt="member" className="h-auto object-cover rounded-full mt-5 mb-3" />
+            <div>{member.description}</div>
+          </div>
+        ))}
+      </div>
+      <div className='font-bold text-2xl mt-5'>21</div>
+      <div>Active Members</div>
+      <div>
+        Want to become part of our Team? Join our <a 
+          className="underline" target="_blank" 
+          href="https://chat.whatsapp.com/EoLzYlBaK9R7rubktNGzZF?fbclid=PAZXh0bgNhZW0CMTEAAaa_CMHfjyKyl5kVcuvDE2ZHRfl0tn5VF58nmmWHJb-WXixKJGgt6rnpSKo_aem_AQay7JaE6GqvemGT52JGMXV_sZMHJjFaB3lN7cIK6NMdKrkneWc4ikvWGfb6SB5C7iSKN4Fttaq43U8g449sgidA"
+        >
+          WhatsApp Community
+        </a>!
+      </div>
     </div>
   )
 }
 
-function Events() {
+function Events(props) {
   const currentDate = new Date();
   currentDate.setHours(0, 0, 0, 0);
 
@@ -68,12 +81,12 @@ function Events() {
   const eventsDataFuture = eventsData.filter(event => parseDate(event.date) >= currentDate)
 
   const formatEvent = (event) => (
-    <div className="flex flex-col items-center w-5/12" key={event.date}>
+    <div className="flex flex-col items-center" key={event.date}>
       <Link href={`/event/${event.name.replace(/\s+/g, '-').toLowerCase()}`}>
         <div className="font-bold text-center text-xl">{event.name}</div>
         <div className="italic text-center text-lg">{event.date}</div>
-        <img src={"/events/"+event.img_src[0]} alt="member" className="w-full object-contain rounded-lg mt-5 mb-3"></img>
-        <div>{event.description_past}</div> 
+        <img src={"/events/" + event.img_src[0]} alt="member" className="object-contain rounded-lg mt-5 mb-3"></img>
+        <div>{event.description_past}</div>
       </Link>
     </div>
   )
@@ -82,50 +95,77 @@ function Events() {
   const eventsFuture = eventsDataFuture.map(event => formatEvent(event))
 
   return (
-    <div className='flex flex-col gap-10'>
+    <div className='flex flex-col py-5 gap-10' {...props}>
       {eventsFuture.length !== 0 && (
-      <div>
-        <Headline>We look forward to meeting you at these events!</Headline>
-        <div className="flex flex-wrap justify-center gap-6">
-          {eventsFuture}
+        <div>
+          <Headline>Upcoming Events</Headline>
+          <div className="grid grid-cols-2 justify-center gap-6 ">
+            {eventsFuture}
+          </div>
+        </div>)}
+      <div className='flex flex-col items-center'>
+        <Headline>What we do</Headline>
+        <div className='max-w-prose mb-6'>
+          Hier ein kurzer Text über die vergangenen Events! Wir hatten alle ganz viel Spaß.
+          Wenn ihr bei einem der tollen Events mitmachen wollt, registriert euch bitte davor,
+          indem ihr auf das Event klickt und dann dem Link folgt.
         </div>
-      </div>)}
-      <div>
-      <Headline>Our past success stories:</Headline>
-      <div className="flex flex-wrap justify-center gap-6">
-        {eventsPast}
-      </div>
+        <div className="grid grid-cols-2 justify-center gap-6">
+          {eventsPast}
+        </div>
       </div>
     </div>
-)}
+  )
+}
 
-function Imprint() {
-  return (<div>
+function Imprint(props) {
+  return (<div {...props}>
     <div className="text-center font-bold text-xl">Impressum</div>
-      <div className="flex flex-wrap justify-center gap-x-6 text-sm">
-        <div>Verantwortlich für die Inhalte dieser Website: Mynds GbR</div>
-        <div>Max Mustermann</div>
-        <div> Musterstraße 1, 12345 Musterstadt</div>
-        <a href="mailto:info@myndsgbr.de" className="hover:underline">info@myndsgbr.de</a>
-        <div>Vertretungsberechtigt: Max Mustermann, Erika Mustermann</div>
-        <Link href="/privacy" className="hover:underline">Datenschutzerklärung</Link>
-      </div>
+    <div className="flex flex-wrap justify-center gap-x-6 text-sm">
+      <div>Verantwortlich: mynds e.V.</div>
+      <div>H3,20,68159 Mannheim</div>
+      <a href="mailto:info@mynds-campus.de" className="underline">info@mynds-campus.de</a>
+      <div>Vertretungsberechtigt: der Vorstand</div>
+      <Link href="/privacy" className="underline">Datenschutzerklärung</Link>
+    </div>
+    <div className="flex flex-wrap justify-center text-sm gap-x-1 mt-5">
+      <div>Website erstellt von </div>
+      <a href="http://hirsch.holten.com" className='underline'>Hirsch & Holten GbR</a>
+    </div>
+  </div>)
+}
+
+function JoinUs(props) {
+  return (<div className='flex items-center gap-3' {...props}>
+    <div className='text-lg'>Want to join our community? Reach out under</div>
+    <a target="_blank" href="https://chat.whatsapp.com/EoLzYlBaK9R7rubktNGzZF?fbclid=PAZXh0bgNhZW0CMTEAAaa_CMHfjyKyl5kVcuvDE2ZHRfl0tn5VF58nmmWHJb-WXixKJGgt6rnpSKo_aem_AQay7JaE6GqvemGT52JGMXV_sZMHJjFaB3lN7cIK6NMdKrkneWc4ikvWGfb6SB5C7iSKN4Fttaq43U8g449sgidA">
+      <img src="/whatsapp.svg" className='w-10' />
+    </a>
+    <a target="_blank" href="https://www.instagram.com/mynds_mannheim?igsh=MTI0ZTYzanNoa2ZiYQ%3D%3D&utm_source=qr">
+      <img src="/instagram.svg" className='w-10' />
+    </a>
+    <a target="_blank" href="mailto:info@mynds-campus.de">
+      <img src="/mail.svg" className='w-10'/>
+    </a>
+    <a target="_blank" href="https://www.linkedin.com/company/mynds-campus/">
+      <img src="/linkedin.svg" className='w-10'/>
+    </a>
   </div>)
 }
 
 
 export default function Home() {
-  return (
-    <div className='flex flex-col gap-20 px-10 py-4 items-center'>
-      <TopBar />
-      <AboutUs />
-      <Events />
-      <Members />
-      <Imprint />
-      <div className="flex flex-wrap justify-center text-sm gap-x-1">
-        <div>Website erstellt von </div>
-        <a href="http://hirsch.holten.com" className='hover:underline'>Hirsch & Holten GbR</a>
+  return (<div className='flex flex-col items-center'>
+    <TopBar />
+    <div className='flex flex-col gap-10 items-center mt-16 max-w-screen-lg'>
+      <div className='flex justify-center'>
+        <img src="/header_cut.svg" className='h-auto max-w-full' />
       </div>
+      <JoinUs />
+      <AboutUs id="about" />
+      <Events className="stripe text-white py-5" id="events" />
+      <Team id="team" />
+      <Imprint className="stripe-down text-white py-5" />
     </div>
-  ); 
+  </div>);
 }

@@ -38,5 +38,31 @@
         "startTime": "19:00",
         "endTime": "21:00",
         "location": "Mars"
+    },
+    {
+        "name": "Hangout 2",
+        "date": "13.03.2025",
+        "img_src": [
+            "hangout.png"
+        ],
+        "description": "We will hang out again.",
+        "description_past": "Wir hatten viel Spaß!",
+        "registration_url": "https://google.com",
+        "startTime": "19:00",
+        "endTime": "21:00",
+        "location": "Mars"
+    },
+{
+        "name": "Hangout 2",
+        "date": "14.03.2025",
+        "img_src": [
+            "hangout.png"
+        ],
+        "description": "We will hang out again.",
+        "description_past": "Wir hatten viel Spaß!",
+        "registration_url": "https://google.com",
+        "startTime": "19:00",
+        "endTime": "21:00",
+        "location": "Mars"
     }
 ]

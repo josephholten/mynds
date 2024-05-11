@@ -1,26 +1,32 @@
 [
     {
-        "name": "Max Hirsch",
-        "role": "CEO",
-        "img_src": "max.png",
-        "description": "Max ist voll cool."
+        "name": "Marie Kühn",
+        "role": "Head of mynds",
+        "img_src": "default.png",
+        "description": ""
     },
     {
-        "name": "Joseph Holten",
-        "role": "CEO",
-        "img_src": "joseph.png",
-        "description": "Joseph ist voll cool."
+        "name": "Tim Neubauer",
+        "role": "Deputy Head of mynds",
+        "img_src": "tim_cut.jpeg",
+        "description": ""
     },
     {
-        "name": "Max2 Hirsch",
-        "role": "CFO",
-        "img_src": "max.png",
-        "description": "Max ist voll doof."
+        "name": "Annalena Straub",
+        "role": "Head of Finance",
+        "img_src": "default.png",
+        "description": ""
     },
     {
-        "name": "Joseph2 Holten",
-        "role": "Intern",
-        "img_src": "joseph.png",
-        "description": "Joseph ist voll doof."
+        "name": "Kilian Weigand",
+        "role": "Head of Events",
+        "img_src": "default.png",
+        "description": ""
+    },
+    {
+        "name": "Milena Krippes",
+        "role": "Head of Marketing",
+        "img_src": "default.png",
+        "description": ""
     }
 ]

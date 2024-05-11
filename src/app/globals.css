@@ -13,3 +13,27 @@ body {
   color: var(--text-color);
   background: var(--background);
 }
+
+.stripe {
+  background-color: var(--primaer);
+  box-shadow: 0 0 0 100vmax var(--primaer);
+  clip-path: inset(0 -100vmax); 
+}
+
+.stripe-down {
+  background-color: var(--primaer);
+  box-shadow: 0 50px 0 100vmax var(--primaer);
+  clip-path: inset(0 -100vmax -100vmax -100vmax); 
+}
+
+.topbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+
+  background-color: var(--background);
+  box-shadow: 0 0 0 100vmax var(--background);
+  clip-path: inset(0 -100vmax); 
+
+  z-index: 100;
+}
