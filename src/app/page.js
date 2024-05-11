@@ -81,20 +81,20 @@ function Events() {
   const eventsPast = eventsDataPast.map(event => formatEvent(event))
   const eventsFuture = eventsDataFuture.map(event => formatEvent(event))
 
-  const eventsFutureHTML = (
-  <>
-    <Headline>We look forward to meeting you at these events!</Headline>
-    <div className="flex flex-wrap justify-center gap-6">
-      {eventsFuture}
-    </div>
-  </>)
-
   return (
-    <div>
-      {eventsFuture.length !== 0 && eventsFutureHTML}
+    <div className='flex flex-col gap-10'>
+      {eventsFuture.length !== 0 && (
+      <div>
+        <Headline>We look forward to meeting you at these events!</Headline>
+        <div className="flex flex-wrap justify-center gap-6">
+          {eventsFuture}
+        </div>
+      </div>)}
+      <div>
       <Headline>Our past success stories:</Headline>
       <div className="flex flex-wrap justify-center gap-6">
         {eventsPast}
+      </div>
       </div>
     </div>
 )}
@@ -116,7 +116,7 @@ function Imprint() {
 
 export default function Home() {
   return (
-    <div className='flex flex-col gap-10 px-10 py-4 items-center'>
+    <div className='flex flex-col gap-20 px-10 py-4 items-center'>
       <TopBar />
       <AboutUs />
       <Events />
