@@ -1,5 +1,5 @@
-import "/src/app/globals.css";
-import events from '/src/app/events.json';
+import "@/globals.css";
+import events from '@/events.json';
 import { useRouter } from 'next/router';
 
 
