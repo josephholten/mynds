@@ -1,14 +1,9 @@
 'use server'
-import eventsData from '/src/app/events.json';
-const fs = require("fs")
 
-
+import { sql } from "@vercel/postgres";
 
 export async function saveEventData(formdata) {
-    console.log(Array.from(formdata.entries()))
-    eventsData.push(Object.fromEntries(Array.from(formdata.entries()).filter(([key, value]) => { console.log(key); return !key.includes("$ACTION_ID")})))
-    var jsonData = JSON.stringify(eventsData)
-    fs.writeFile("src/app/events.json", jsonData, function(err) {if(err) {console.log(err)}})
-
-    console.log("Data saved!")
+    const data = Object.fromEntries(Array.from(formdata.entries()).filter(([key, value]) => !key.includes("$ACTION_ID")))
+    const { resp } = await sql`INSERT INTO Events (Name, Date) VALUES (${data.name}, ${data.date})`
+    console.log(resp)
 }
