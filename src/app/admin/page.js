@@ -7,7 +7,7 @@ import { newEvent, newMember, getAll, deleteItem, getImageSourcesForEvent } from
 import { set } from 'zod';
 
 // import {Headline} from "/src/app/components"
-export function Headline({ children }) {
+function Headline({ children }) {
   return (<div className="font-bold text-2xl mb-5">{children}</div>)
 }
 
