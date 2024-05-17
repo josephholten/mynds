@@ -16,6 +16,7 @@ interface EventsTable {
 }
 
 const EventData = z.object({
+  id: z.string(),
   name: z.string(),
   images: z.string(),
   startdatetime: z.coerce.date(),
@@ -89,27 +90,39 @@ async function insertImage({url, event_id}: {url: string, event_id: number | nul
 export async function newEvent(prevState: FormState, formData: FormData) {
   try {
     const data = EventData.parse(toObj(formData))
-    const {images, ...without_images} = data
+    const {images, id, ...without_images} = data
 
-    const ids: {id: number}[] = await db
-    .insertInto("events")
-    .values(without_images)
-    .returning("id")
-    .execute()
-
-    if (ids.length != 1) {
-      return {message: `API ERROR: inserted not precisely one events??`}
+    if (id != null && id != "") {
+      const result = await db
+      .updateTable("events")
+      .set({...without_images})
+      .where('id', "=", Number(id))
+      .execute()
+      if (result.length !== 1) {
+        return {message: `updated multiple events -> non unique primary key?`}
+      } else {
+        return {message: `Updated ${result[0].numUpdatedRows} rows`}
+      }
     } else {
-      const id = ids[0].id
-      data.images
-      .split(",")
-      .map(url => url.trim())
-      .filter(url => url !== "")
-      .forEach(url => insertImage({url, event_id: id}))
+      const ids: {id: number}[] = await db
+      .insertInto("events")
+      .values(without_images)
+      .returning("id")
+      .execute()
 
-      return {message: `Inserted event with id ${id}`}
+      if (ids.length != 1) {
+        return { message: `API ERROR: inserted not precisely one events??` }
+      } else {
+        const id = ids[0].id
+        data.images
+          .split(",")
+          .map(url => url.trim())
+          .filter(url => url !== "")
+          .forEach(url => insertImage({ url, event_id: id }))
+
+        return { message: `Inserted event with id ${id}` }
+      }
     }
-
   } catch (error) {
     console.log(error)
     return {message: `API Error: couldn't insert eventData. Error was: ${error}`}

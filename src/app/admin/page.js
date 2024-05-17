@@ -20,7 +20,7 @@ function InputBox({children, label}) {
   </div>)
 }
 
-function TextInput({label, name, ...props}) {
+function TextInput({label, ...props}) {
   return (<InputBox label={label}>
     <input
       type="text"
@@ -30,7 +30,7 @@ function TextInput({label, name, ...props}) {
   </InputBox>)
 }
 
-function DateInput({label, name, ...props}) {
+function DateInput({label, ...props}) {
   return (<InputBox label={label}>
     <input
       type="datetime-local"
@@ -40,7 +40,7 @@ function DateInput({label, name, ...props}) {
   </InputBox>)
 }
 
-function TextAreaInput({label, name, ...props}) {
+function TextAreaInput({label, ...props}) {
   return (<InputBox label={label}>
     <textarea
       type="text"
