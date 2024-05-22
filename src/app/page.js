@@ -84,7 +84,7 @@ function Events(props) {
   )
   
   const eventsPast = eventsDataPast.map(event => formatEvent(event))
-  const eventsFuture = []//eventsDataFuture.map(event => formatEvent(event))
+  const eventsFuture = eventsDataFuture.map(event => formatEvent(event))
   console.log(eventsFuture.length)
 
   return (
