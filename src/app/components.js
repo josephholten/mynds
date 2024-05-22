@@ -1,11 +1,18 @@
 export function TopBar() {
-  return (<div className='flex justify-end gap-x-10 underline font-bold w-full max-w-screen-lg topbar py-5 px-10'>
-    <a href="#about">About Us</a>
-    <a href="#events">Events</a>
-    <a href="#team">Team</a>
-  </div>)
+  return (
+    <div className='flex justify-between items-center w-full max-w-screen-lg topbar py-5 px-10 gap-x-7'>
+      <div className='w-16'>
+        <img src="/logo.svg"></img>
+      </div>
+      <div className='flex justify-end gap-x-7 underline font-bold'>
+        <a href="#about">About Us</a>
+        <a href="#events">Events</a>
+        <a href="#team">Team</a>
+      </div>
+    </div>
+  );
 }
 
 export function Headline({ children }) {
-  return (<div className="text-center font-bold text-2xl mb-5">{children}</div>)
+  return (<div className="text-center font-bold text-3xl mb-5">{children}</div>)
 }

@@ -44,8 +44,8 @@ function Team(props) {
           </div>
         ))}
       </div>
-      <div className='font-bold text-2xl mt-5'>21</div>
-      <div>Active Members</div>
+      <div className='font-bold text-4xl mt-16'>21</div>
+      <div className='font-bold text-5xl mt-2'>Active Members</div>
       <div>
         Want to become part of our Team? Join our <a 
           className="underline" target="_blank" 
@@ -73,16 +73,19 @@ function Events(props) {
   const formatEvent = (event) => (
     <div className="flex flex-col items-center" key={event.date}>
       <Link href={`/event/${event.name.replace(/\s+/g, '-').toLowerCase()}`}>
-        <div className="font-bold text-center text-xl">{event.name}</div>
-        <div className="italic text-center text-lg">{event.date}</div>
-        <img src={"/events/" + event.img_src[0]} alt="member" className="object-contain rounded-lg mt-5 mb-3"></img>
+        <div className="h-16 flex flex-col justify-center">
+          <div className="font-bold text-center text-xl">{event.name}</div>
+          <div className="italic text-center text-lg">{event.date}</div>
+        </div>
+        <img src={"/events/" + event.img_src[0]} alt="event" className="object-contain rounded-lg mt-5 mb-3"></img>
         <div>{event.description_past}</div>
       </Link>
     </div>
   )
-
+  
   const eventsPast = eventsDataPast.map(event => formatEvent(event))
-  const eventsFuture = eventsDataFuture.map(event => formatEvent(event))
+  const eventsFuture = []//eventsDataFuture.map(event => formatEvent(event))
+  console.log(eventsFuture.length)
 
   return (
     <div className='flex flex-col py-5 gap-10' {...props}>
@@ -93,7 +96,14 @@ function Events(props) {
             {eventsFuture}
           </div>
         </div>)}
-      <div className='flex flex-col items-center'>
+        {eventsFuture.length == 0 && (
+        <div>
+          <Headline>New Events</Headline>
+          <div className='mt-32 mb-48'>
+            <Headline>Coming Soon!</Headline>
+          </div>
+        </div>)}
+      <div className='flex flex-col items-center mt-16'>
         <Headline>What we do</Headline>
         <div className='max-w-prose mb-6'>
           Hier ein kurzer Text über die vergangenen Events! Wir hatten alle ganz viel Spaß.
@@ -115,7 +125,7 @@ function Imprint(props) {
       <div>Verantwortlich: mynds e.V.</div>
       <div>H3,20,68159 Mannheim</div>
       <a href="mailto:info@mynds-campus.de" className="underline">info@mynds-campus.de</a>
-      <div>Vertretungsberechtigt: der Vorstand</div>
+      <div>Vertretungsberechtigt: Lea Marie Kühn, Tim Neubauer & Annalena Straub als Vorstand von Mynds e.V.</div>
       <Link href="/privacy" className="underline">Datenschutzerklärung</Link>
     </div>
     <div className="flex flex-wrap justify-center text-sm gap-x-1 mt-5">

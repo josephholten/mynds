@@ -70,7 +70,7 @@ export default function EventPage({ params }){
         <div className="gap-6 max-w-screen-sm">
             {event.img_src.map(img => (
               <div key={img} className="max-w-screen-sm px-2">
-                <img src={"/events/"+img} alt={`Bilder von ${event.name}`} width="100%" className="object-contain rounded-lg "></img>
+                <img src={"/events/"+img} alt={`Bilder von ${event.name}`} width="100%" className="object-contain rounded-lg m-4"></img>
               </div>
             ))}
         </div>
