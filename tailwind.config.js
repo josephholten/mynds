@@ -11,6 +11,9 @@ module.exports = {
         "akzent-dunkel": "#660530",
         "primaer": "#970757"
       },
+      fontFamily: {
+        "headline": ["BestLight"],
+      }
     }
   },
   plugins: [],

@@ -4,7 +4,7 @@ export function TopBar() {
       <div className='w-16'>
         <img src="/logo.svg"></img>
       </div>
-      <div className='flex justify-end gap-x-7 underline font-bold'>
+      <div className='flex justify-end gap-x-7 font-headline font-bold'>
         <a href="#about">About Us</a>
         <a href="#events">Events</a>
         <a href="#team">Team</a>
@@ -14,5 +14,5 @@ export function TopBar() {
 }
 
 export function Headline({ children }) {
-  return (<div className="text-center font-bold text-3xl mb-5">{children}</div>)
+  return (<div className="text-center font-headline text-3xl mb-5">{children}</div>)
 }

@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  @font-face {
+    font-family: 'BestLight';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(./fonts/BestLight.woff) format('woff');
+  }
+}
+
 :root {
   --background: #fef4e8;
   --akzent-dunkel: #660530;

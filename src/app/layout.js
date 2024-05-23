@@ -1,7 +1,11 @@
-import { Arimo } from "next/font/google";
+import { Open_Sans } from "next/font/google";
 import "./globals.css";
 
-const font = Arimo({ subsets: ["latin"] });
+const font = Open_Sans({
+  style: ['normal', 'italic'],
+  weight: ['400', '700', '800'],
+  subsets: ["latin"],
+});
 
 export const metadata = {
   title: "Mynds",
