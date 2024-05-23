@@ -17,6 +17,7 @@
   --akzent-dunkel: #660530;
   --primaer: #970757;
   --text-color: var(--akzent-dunkel);
+  scroll-behavior: smooth;
 }
 
 body {

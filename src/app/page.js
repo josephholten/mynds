@@ -9,7 +9,7 @@ function AboutUs(props) {
     <div className="w-20 flex flex-col justify-end">
       <img src="/quote-open.svg" />
     </div>
-    <div className='italic font-bold text-lg text-center max-w-prose'>
+    <div className='italic font-bold text-xl text-center max-w-prose'>
       <div>
         Our mission is to empower female students in
         business and economics, removing obstacles and
@@ -125,7 +125,7 @@ function Imprint(props) {
       <div>Verantwortlich: mynds e.V.</div>
       <div>H3,20,68159 Mannheim</div>
       <a href="mailto:info@mynds-campus.de" className="underline">info@mynds-campus.de</a>
-      <div>Vertretungsberechtigt: Lea Marie Kühn, Tim Neubauer & Annalena Straub als Vorstand von Mynds e.V.</div>
+      <div>Vertretungsberechtigt: Lea Marie Kühn, Tim Neubauer & Annalena Straub als Vorstand von mynds e.V.</div>
       <Link href="/privacy" className="underline">Datenschutzerklärung</Link>
     </div>
     <div className="flex flex-wrap justify-center text-sm gap-x-1 mt-5">
