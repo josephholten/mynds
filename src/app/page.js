@@ -1,13 +1,22 @@
 import membersData from './members.json';
 import eventsData from './events.json';
 import Link from 'next/link';
+import Image from 'next/image'
+
+import headerImage from './images/header.png'
+import whatsappLogo from './images/whatsapp.svg'
+import mailLogo from './images/mail.svg'
+import instagramLogo from './images/instagram.svg'
+import linkedinLogo from './images/linkedin.svg'
+import quoteOpenImage from './images/quote-open.svg'
+import quoteClosedImage from './images/quote-closed.svg'
 
 import { TopBar, Headline } from './components';
 
 function AboutUs(props) {
   return (<div className='flex justify-center py-5' {...props}>
     <div className="w-20 flex flex-col justify-end">
-      <img src="/quote-open.svg" />
+      <Image src={quoteOpenImage} />
     </div>
     <div className='italic font-bold text-xl text-center max-w-prose'>
       <div>
@@ -24,7 +33,7 @@ function AboutUs(props) {
       </div>
     </div>
     <div className='w-20'>
-      <img src="/quote-close.svg"></img>
+      <Image src={quoteClosedImage} />
     </div>
   </div>)
 }
@@ -139,16 +148,16 @@ function JoinUs(props) {
   return (<div className='flex items-center gap-3' {...props}>
     <div className='text-lg'>Want to join our community? Reach out under</div>
     <a target="_blank" href="https://chat.whatsapp.com/EoLzYlBaK9R7rubktNGzZF?fbclid=PAZXh0bgNhZW0CMTEAAaa_CMHfjyKyl5kVcuvDE2ZHRfl0tn5VF58nmmWHJb-WXixKJGgt6rnpSKo_aem_AQay7JaE6GqvemGT52JGMXV_sZMHJjFaB3lN7cIK6NMdKrkneWc4ikvWGfb6SB5C7iSKN4Fttaq43U8g449sgidA">
-      <img src="/whatsapp.svg" className='w-10' />
+      <Image src={whatsappLogo} alt="WhatsApp Logo" className='w-10' />
     </a>
     <a target="_blank" href="https://www.instagram.com/mynds_mannheim?igsh=MTI0ZTYzanNoa2ZiYQ%3D%3D&utm_source=qr">
-      <img src="/instagram.svg" className='w-10' />
+      <Image src={instagramLogo} alt="WhatsApp Logo" className='w-10' />
     </a>
     <a target="_blank" href="mailto:info@mynds-campus.de">
-      <img src="/mail.svg" className='w-10'/>
+      <Image src={mailLogo} alt="WhatsApp Logo" className='w-10' />
     </a>
     <a target="_blank" href="https://www.linkedin.com/company/mynds-campus/">
-      <img src="/linkedin.svg" className='w-10'/>
+      <Image src={linkedinLogo} alt="WhatsApp Logo" className='w-10' />
     </a>
   </div>)
 }
@@ -159,7 +168,10 @@ export default function Home() {
     <TopBar />
     <div className='flex flex-col gap-10 items-center mx-10 mt-16 max-w-screen-lg'>
       <div className='flex justify-center'>
-        <img src="/header_cut.svg" className='h-auto max-w-full' />
+        <Image
+          src={headerImage}
+          alt="Logo Image"
+        />
       </div>
       <JoinUs />
       <AboutUs id="about" />
