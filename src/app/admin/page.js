@@ -1,10 +1,13 @@
 'use client'
 
+import Image from 'next/image'
 import React, { useEffect, useState } from 'react';
 import { useFormState } from 'react-dom'
 import "/src/app/globals.css";
 import { newEvent, newMember, getAll, deleteItem, getImageSourcesForEvent } from "/src/app/actions"
 import { set } from 'zod';
+import deleteIcon from '/src/app/images/delete-pad.svg'
+import editIcon from '/src/app/images/edit.svg'
 
 // import {Headline} from "/src/app/components"
 function Headline({ children }) {
@@ -173,10 +176,10 @@ function EventList({setEditState}) {
   function EventRow(event) {
     return (<div className='border-2 flex items-center min-h-12' key={event.id}>
       <button onClick={editEvent(event)}>
-        <img src="/edit.svg" className="h-8 w-full" />
+        <Image src={editIcon} className="h-8 w-full" />
       </button>
       <button onClick={deleteEvent(event.id)}>
-        <img src="/delete-pad.svg" className='h-8 w-full' />
+        <Image src={deleteIcon} className='h-8 w-full' />
       </button> 
       <span>{typeof event.startdatetime === "object" ? event.startdatetime.toDateString() : event.startdatetime} {event.name} @{event.location}</span>
     </div>)
