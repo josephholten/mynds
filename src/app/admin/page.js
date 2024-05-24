@@ -4,8 +4,7 @@ import Image from 'next/image'
 import React, { useEffect, useState } from 'react';
 import { useFormState } from 'react-dom'
 import "/src/app/globals.css";
-import { newEvent, newMember, getAll, deleteItem, getImageSourcesForEvent } from "/src/app/actions"
-import { set } from 'zod';
+import { editEvent, getAllEvents, deleteItem } from "/src/app/actions"
 import deleteIcon from '/src/app/images/delete-pad.svg'
 import editIcon from '/src/app/images/edit.svg'
 
@@ -55,7 +54,7 @@ function TextAreaInput({label, ...props}) {
 }
 
 function EventEditor({editState, setEditState}) {
-  const [formState, formAction] = useFormState(newEvent, {message: ''})
+  const [formState, formAction] = useFormState(editEvent, {message: ''})
 
   return (
     <div className="flex flex-col gap-y-2 border-4 border-primaer rounded-md p-4 max-w-screen-sm w-full">
@@ -96,7 +95,7 @@ function EventEditor({editState, setEditState}) {
         />
         <TextInput 
           name="images" 
-          placeholder="http://example.com/img1, http://example.com/img2"
+          placeholder="http://example.com/img1 http://example.com/img2"
           label="Image URL(s)"
           value={editState.images}
           onChange={e => setEditState({...editState, images: e.target.value})}
@@ -161,14 +160,9 @@ function EventList({setEditState}) {
       return dateString + "T" + timeString;
     }
 
-    function intersperse(arr, sep) {
-      return [].concat(...arr.map(e => [sep, e])).slice(1)
-    }
-
     newEditState.id = String(event.id)
     newEditState.startdatetime = formatDateTimeForInput(event.startdatetime)
     newEditState.enddatetime = formatDateTimeForInput(event.enddatetime)
-    newEditState.images = intersperse(await getImageSourcesForEvent(event.id), ", ")
 
     setEditState(newEditState)
   }
