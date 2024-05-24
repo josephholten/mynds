@@ -170,10 +170,10 @@ function EventList({setEditState}) {
   function EventRow(event) {
     return (<div className='border-2 flex items-center min-h-12' key={event.id}>
       <button onClick={editEvent(event)}>
-        <Image src={editIcon} className="h-8 w-full" />
+        <Image src={editIcon} className="h-8 w-full" alt="edit icon" />
       </button>
       <button onClick={deleteEvent(event.id)}>
-        <Image src={deleteIcon} className='h-8 w-full' />
+        <Image src={deleteIcon} className='h-8 w-full' alt="delete icon" />
       </button> 
       <span>{typeof event.startdatetime === "object" ? event.startdatetime.toDateString() : event.startdatetime} {event.name} @{event.location}</span>
     </div>)

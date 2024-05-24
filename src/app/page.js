@@ -94,7 +94,6 @@ function Events(props) {
   
   const eventsPast = eventsDataPast.map(event => formatEvent(event))
   const eventsFuture = eventsDataFuture.map(event => formatEvent(event))
-  console.log(eventsFuture.length)
 
   return (
     <div className='flex flex-col py-5 gap-10' {...props}>
