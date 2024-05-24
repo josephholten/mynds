@@ -4,7 +4,7 @@ import Image from 'next/image'
 import React, { useEffect, useState } from 'react';
 import { useFormState } from 'react-dom'
 import "/src/app/globals.css";
-import { editEvent, getAllEvents, deleteItem } from "/src/app/actions"
+import { editEvent, getAll, deleteItem } from "/src/app/actions"
 import deleteIcon from '/src/app/images/delete-pad.svg'
 import editIcon from '/src/app/images/edit.svg'
 
