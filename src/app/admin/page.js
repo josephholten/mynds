@@ -4,9 +4,10 @@ import Image from 'next/image'
 import React, { useEffect, useState } from 'react';
 import { useFormState } from 'react-dom'
 import "/src/app/globals.css";
-import { editEvent, getAll, deleteItem } from "/src/app/actions"
+import { editEvent, getAllEvents, getAllTeam, deleteItem, editTeam, editActiveMembers } from "/src/app/actions"
 import deleteIcon from '/src/app/images/delete-pad.svg'
 import editIcon from '/src/app/images/edit.svg'
+import Head from 'next/head';
 
 // import {Headline} from "/src/app/components"
 function Headline({ children }) {
@@ -136,7 +137,7 @@ function EventList({setEditState}) {
   const [events, setEvents] = useState([])
 
   function updateEvents() {
-    getAll("events").then(evs => setEvents(evs))
+    getAllEvents().then(evs => setEvents(evs))
   }
 
   useEffect(() => {
@@ -187,8 +188,117 @@ function EventList({setEditState}) {
   </div>)
 }
 
+function TeamEditor({editState, setEditState}) {
+  const [formState, formAction] = useFormState(editTeam, {message: ''})
+
+  return (
+    <div className="flex flex-col gap-y-2 border-4 border-primaer rounded-md p-4 max-w-screen-sm w-full">
+      <Headline>Team Editor</Headline>
+      <form action={formAction} className="flex flex-col gap-y-4">
+        <TextInput
+          name="id"
+          label="ID (leave empty to create new)"
+          value={editState.id}
+          onChange={e => setEditState({...editState, id: e.target.value})}
+        />
+        <TextInput
+          name="name"
+          label="Team Member Name"
+          placeholder="Max Mustermann"
+          value={editState.name}
+          onChange={e => setEditState({...editState, name: e.target.value})}
+        />
+        <TextInput
+          name="role"
+          label="Role"
+          placeholder="Head of mynds"
+          value={editState.role}
+          onChange={e => setEditState({...editState, role: e.target.value})}
+        />
+        <TextInput
+          name="image"
+          placeholder="http://example.com/img1"
+          label="Image URL"
+          value={editState.image}
+          onChange={e => setEditState({...editState, image: e.target.value})}
+        />
+        <TextInput
+          name="position"
+          placeholder="3"
+          label="Position in List on Homepage"
+          value={editState.position}
+          onChange={e => setEditState({...editState, position: e.target.value})}
+        />
+
+        <button type="submit" className="btn btn-primary mt-4 border-4 border-white bg-white rounded-lg p-1 max-w-fit">
+          Submit
+        </button>
+        <div>{formState.message}</div>
+      </form>
+    </div>
+  );
+};
+
+function TeamList({setEditState}) {
+  const [team, setTeam] = useState([])
+
+  function updateTeam() {
+    getAllTeam().then(t => setTeam(t))
+  }
+
+  useEffect(() => {
+    updateTeam()
+  }, [])
+
+  const deleteTeamMember = (id) => () => {
+    deleteItem("team", id)
+    updateTeam()
+  }
+
+  const editTeamMember = (teamMember) => async () => {
+    const newEditState = {...teamMember}
+
+    newEditState.id = String(teamMember.id)
+
+    setEditState(newEditState)
+  }
+
+  function TeamRow(teamMember) {
+    return (<div className='border-2 flex items-center min-h-12' key={teamMember.id}>
+      <button onClick={editTeamMember(teamMember)}>
+        <Image src={editIcon} className="h-8 w-full" alt="edit icon" />
+      </button>
+      <button onClick={deleteTeamMember(teamMember.id)}>
+        <Image src={deleteIcon} className='h-8 w-full' alt="delete icon" />
+      </button>
+      <span>{teamMember.role} {teamMember.name}</span>
+    </div>)
+  }
+
+  return (<div className='w-full'>
+    <Headline>Team List</Headline>
+    <div className='flex flex-col gap-2 font-mono overflow-y-scroll max-h-[30vh]'>
+      {team.map(teamMember => TeamRow(teamMember))}
+    </div>
+  </div>)
+}
+
+export function ActiveMembers() {
+  return (<div className='w-full'>
+    <Headline>Active Members</Headline>
+    <form action={editActiveMembers}>
+      <TextInput
+        name="members"
+        placeholder="21"
+        label="Active Members"
+      />
+      <button type="submit" className="btn btn-primary mt-4 border-4 border-white bg-white rounded-lg p-1 max-w-fit">Submit</button>
+    </form>
+  </div>)
+}
+
 export default function Admin() {
-  const [editState, setEditState] = useState({
+  const [editEventState, setEditEventState] = useState({
     id: "",
     name: "",
     startdatetime: "",
@@ -200,8 +310,19 @@ export default function Admin() {
     description_past: "",
   })
 
+  const [editTeamState, setEditTeamState] = useState({
+    id: "",
+    name: "",
+    role: "",
+    image: "",
+    position: "",
+  })
+
   return (<div className='p-5 flex flex-col items-center gap-4'>
-    <EventEditor editState={editState} setEditState={setEditState} />
-    <EventList setEditState={setEditState} />
+    <EventEditor editState={editEventState} setEditState={setEditEventState} />
+    <EventList setEditState={setEditEventState} />
+    <TeamEditor editState={editTeamState} setEditState={setEditTeamState} />
+    <TeamList setEditState={setEditTeamState} />
+    <ActiveMembers />
   </div>)
 }

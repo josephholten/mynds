@@ -1,5 +1,3 @@
-import membersData from './members.json';
-import eventsData from './events.json';
 import Link from 'next/link';
 import Image from 'next/image'
 
@@ -12,11 +10,12 @@ import quoteOpenImage from './images/quote-open.svg'
 import quoteClosedImage from './images/quote-closed.svg'
 
 import { TopBar, Headline } from './components';
+import { getAllEvents, getAllTeam, getActiveMembers } from './actions'
 
 function AboutUs(props) {
   return (<div className='flex justify-center py-5' {...props}>
     <div className="w-20 flex flex-col justify-end">
-      <Image src={quoteOpenImage} />
+      <Image src={quoteOpenImage} alt="" />
     </div>
     <div className='italic font-bold text-xl text-center max-w-prose'>
       <div>
@@ -33,27 +32,29 @@ function AboutUs(props) {
       </div>
     </div>
     <div className='w-20'>
-      <Image src={quoteClosedImage} />
+      <Image src={quoteClosedImage} alt="" />
     </div>
   </div>)
 }
 
-function Team(props) {
+async function Team(props) {
   //description: 1) delete 2) ein/ausklappen 3) link to site with description 4) keep like this
+  const team = await getAllTeam()
+  const active_members = await getActiveMembers()
+
   return (
     <div className='flex flex-col items-center w-full py-5' {...props}>
       <Headline>Meet our team!</Headline>
       <div className="grid grid-cols-3 gap-14">
-        {membersData.map(member => (
-          <div className="flex flex-col items-center" key={member.name}>
+        {team.map(member => (
+          <div className="flex flex-col items-center" key={member.name} >
             <div className="font-bold text-center text-xl">{member.name}</div>
             <div className="italic text-center text-lg">{member.role}</div>
-            <img src={"/people/" + member.img_src} key={member.name} alt="member" className="h-auto object-cover rounded-full mt-5 mb-3" />
-            <div>{member.description}</div>
+            <Image src={member.image} alt="member" className="object-cover rounded-full mt-5 mb-3" width={300} height={300} />
           </div>
         ))}
       </div>
-      <div className='font-bold text-4xl mt-16'>21</div>
+      <div className='font-bold text-4xl mt-16'>{active_members.members}</div>
       <div className='font-bold text-5xl mt-2'>Active Members</div>
       <div>
         Want to become part of our Team? Join our <a 
@@ -67,33 +68,30 @@ function Team(props) {
   )
 }
 
-function Events(props) {
+async function Events(props) {
   const currentDate = new Date();
   currentDate.setHours(0, 0, 0, 0);
 
-  const parseDate = (datestr) => {
-    const [day, month, year] = datestr.split(".");
-    return new Date(`${year}-${month}-${day}`);
-  }
+  const events = await getAllEvents()
 
-  const eventsDataPast = eventsData.filter(event => parseDate(event.date) < currentDate)
-  const eventsDataFuture = eventsData.filter(event => parseDate(event.date) >= currentDate)
+  const eventsDataPast = events.filter(event => event.startdatetime < currentDate)
+  const eventsDataFuture = events.filter(event => event.startdatetime >= currentDate)
 
-  const formatEvent = (event) => (
-    <div className="flex flex-col items-center" key={event.date}>
-      <Link href={`/event/${event.name.replace(/\s+/g, '-').toLowerCase()}`}>
+  const formatEvent = (event, description) => (
+    <div className="flex flex-col items-center" key={event.id}>
+      <Link href={`/event/${event.id}`}>
         <div className="h-16 flex flex-col justify-center">
           <div className="font-bold text-center text-xl">{event.name}</div>
           <div className="italic text-center text-lg">{event.date}</div>
         </div>
-        <img src={"/events/" + event.img_src[0]} alt="event" className="object-contain rounded-lg mt-5 mb-3"></img>
-        <div>{event.description_past}</div>
+        <Image src={event.images.split(" ")[0]} alt="event" className="object-contain rounded-lg mt-5 mb-3" width={1000} height={1000} />
+        <div>{description}</div>
       </Link>
     </div>
   )
   
-  const eventsPast = eventsDataPast.map(event => formatEvent(event))
-  const eventsFuture = eventsDataFuture.map(event => formatEvent(event))
+  const eventsPast = eventsDataPast.map(event => formatEvent(event, event.description_past))
+  const eventsFuture = eventsDataFuture.map(event => formatEvent(event, event.description))
 
   return (
     <div className='flex flex-col py-5 gap-10' {...props}>
@@ -170,6 +168,7 @@ export default function Home() {
         <Image
           src={headerImage}
           alt="Logo Image"
+          priority={true}
         />
       </div>
       <JoinUs />

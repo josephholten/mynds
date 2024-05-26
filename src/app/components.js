@@ -6,7 +6,7 @@ export function TopBar() {
   return (
     <div className='flex justify-between items-center w-full max-w-screen-lg topbar py-5 px-10 gap-x-7'>
       <div className='w-16'>
-        <Image src={logoImage} alt="logo" />
+        <Image src={logoImage} alt="logo" priority={true} />
       </div>
       <div className='flex justify-end gap-x-7 font-headline font-bold'>
         <a href="#about">About Us</a>

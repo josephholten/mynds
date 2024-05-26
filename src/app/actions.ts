@@ -2,6 +2,7 @@
 
 import { createKysely } from '@vercel/postgres-kysely'
 import { Generated, ColumnType } from 'kysely'
+import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
 
 interface EventsTable {
@@ -33,18 +34,31 @@ interface TeamTable {
   name: string
   role: string
   image: string
+  position: number
 }
 
 const TeamData = z.object({
+  id: z.string(),
   name: z.string(),
   role: z.string(),
   image: z.string(),
+  position: z.coerce.number(),
+})
+
+interface MembersTable {
+  id: Generated<number>
+  members: number
+}
+
+const MembersData = z.object({
+  members: z.coerce.number(),
 })
 
 type TableKey = "team" | "events"
 interface Database {
   team: TeamTable
   events: EventsTable
+  members: MembersTable
 }
 
 const db = createKysely<Database>()
@@ -65,6 +79,12 @@ type FormState = {
 export async function editEvent(prevState: FormState, formData: FormData) {
   try {
     const data = EventData.parse(toObj(formData))
+    // normalize
+    data.images = data.images
+      .split(" ")
+      .map(image => image.trim())
+      .filter(image => image != "")
+      .join(" ")
     const {id, ...without_id} = data
     let inserted_or_updated_id: number
 
@@ -89,6 +109,8 @@ export async function editEvent(prevState: FormState, formData: FormData) {
       inserted_or_updated_id = Number(id)
     }
 
+    revalidatePath("/")
+
     return { message: `Inserted/ Updated event with id ${inserted_or_updated_id}` }
   } catch (error) {
     console.log(error)
@@ -96,9 +118,71 @@ export async function editEvent(prevState: FormState, formData: FormData) {
   }
 }
 
-export async function getAll(table: TableKey) {
+export async function editTeam(prevState: FormState, formData: FormData) {
+  try {
+    const data = TeamData.parse(toObj(formData))
+    const {id, ...without_id} = data
+    let inserted_or_updated_id: number
+
+    // no id given -> insert
+    if (id == null || id == "") {
+      inserted_or_updated_id = (await db
+        .insertInto("team")
+        .values(without_id)
+        .returning("id")
+        .executeTakeFirstOrThrow()
+      ).id
+    }
+
+    // if id is given -> update
+    else {
+      await db
+        .updateTable("team")
+        .set(without_id)
+        .where('id', '=', Number(id))
+        .executeTakeFirstOrThrow()
+
+      inserted_or_updated_id = Number(id)
+    }
+
+    revalidatePath("/")
+
+    return { message: `Inserted/ Updated team member with id ${inserted_or_updated_id}` }
+  } catch (error) {
+    console.log(error)
+    return {message: `API Error: couldn't insert eventData. Error was: ${error}`}
+  }
+}
+
+export async function editActiveMembers(formData: FormData) {
+  const data = MembersData.parse(toObj(formData))
+
+  await db
+    .updateTable("members")
+    .where("id", "=", 0)
+    .set(data)
+    .executeTakeFirst()
+}
+
+export async function getActiveMembers() {
   return await db
-    .selectFrom(table)
+    .selectFrom("members")
+    .selectAll()
+    .where("id", "=", 0)
+    .executeTakeFirst()
+}
+
+export async function getAllTeam() {
+  return await db
+    .selectFrom("team")
+    .selectAll()
+    .orderBy("position asc")
+    .execute()
+}
+
+export async function getAllEvents() {
+  return await db
+    .selectFrom("events")
     .selectAll()
     .orderBy("startdatetime desc")
     .execute()
@@ -109,9 +193,8 @@ export async function deleteItem(table: TableKey, id: number) {
     .deleteFrom(table)
     .where(`${table}.id`, "=", id)
     .executeTakeFirst()
-  return
-}
 
-export async function newMember(formData: FormData) {
-  // TODO
+  revalidatePath("/")
+
+  return
 }
