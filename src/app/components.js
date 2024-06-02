@@ -18,5 +18,5 @@ export function TopBar() {
 }
 
 export function Headline({ children }) {
-  return (<div className="text-center font-headline text-3xl mb-5">{children}</div>)
+  return (<div className="text-center font-headline text-5xl mb-5">{children}</div>)
 }

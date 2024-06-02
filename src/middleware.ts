@@ -10,8 +10,6 @@ export async function middleware(req: NextRequest) {
   const basicAuth = req.headers.get('authorization')
   const url = req.nextUrl
 
-  console.log("middleware called")
-
   if (!basicAuth) {
     // Prompt for authentication
     return new Response('Auth required', {
