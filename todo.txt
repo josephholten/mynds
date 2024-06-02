@@ -1,4 +1,2 @@
-what we do text ganze breite?
-icons linienstärke dünner
-admin for team and active member count
-get info on main page from database
+google
+deployment unter domain
