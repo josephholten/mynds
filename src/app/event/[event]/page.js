@@ -1,5 +1,4 @@
 import "/src/app/globals.css";
-import events from '/src/app/events.json';
 import {CalendarLink} from "./CalendarLink"
 
 function DateReformater(date) {
