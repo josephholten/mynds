@@ -3,28 +3,7 @@ import {CalendarLink} from "./CalendarLink"
 import { getAllEvents, getEvent } from "/src/app/actions"
 import Image from 'next/image'
 
-function DateReformater(date) {
-  console.log(date)
-  const parts = date.split(".");
-  return `${parts[2]}-${parts[1]}-${parts[0]}`;
-}
-
-/*
-export async function getStaticPaths() {
-  const paths = events.map(event => ({
-      params: { event: event.name.replace(/\s+/g, '-').toLowerCase() },
-  }));
-
-  return { paths, fallback: false };
-}
-*/
-
-/*j
-export async function getStaticProps({ params }) {
-  const event = events.find(e => e.name.replace(/\s+/g, '-').toLowerCase() === params.event);
-  return { props: { event } };
-}
-*/
+const formatDateTime = (dt) => (`${dt.getDay()}.${dt.getMonth()}.${dt.getYear()}, ${dt.getHours()}:${dt.getMinutes()}`)
 
 export async function generateStaticParams() {
   const events = await getAllEvents()
@@ -45,7 +24,7 @@ export default async function EventPage({ params }){
   return (
     <div className='flex flex-col gap-2 px-10 py-4 items-center'>
       <div className="font-bold text-center text-xl">{event.name}</div>
-      <div className="italic text-center text-lg">{event.date}</div>
+      <div className="italic text-center text-lg">{formatDateTime(event.startdatetime)}</div>
       {eventInPast ? (
           <div>{event.description_past}</div>
         ) : (
