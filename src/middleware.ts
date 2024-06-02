@@ -2,9 +2,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { authenticateUser } from "./app/actions"
 
-/*export const config = {
-  matcher: ['/admin/**'],
-}*/
+export const config = {
+  matcher: ['/admin'],
+}
 
 export async function middleware(req: NextRequest) {
   const basicAuth = req.headers.get('authorization')
