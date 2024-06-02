@@ -17,6 +17,12 @@ interface EventsTable {
   images: string
 }
 
+interface AdminTable {
+  id: Generated<number>
+  username: string
+  password: string
+}
+
 const EventData = z.object({
   id: z.string(),
   name: z.string(),
@@ -58,7 +64,7 @@ type TableKey = "team" | "events"
 interface Database {
   team: TeamTable
   events: EventsTable
-  members: MembersTable
+  admin: AdminTable
 }
 
 const db = createKysely<Database>()
@@ -186,6 +192,19 @@ export async function getAllEvents() {
     .selectAll()
     .orderBy("startdatetime desc")
     .execute()
+}
+
+export async function authenticateUser(username: string, password: string) {
+  const response = await db
+    .selectFrom("admin")
+    .selectAll()
+    .where(`admin.username`, "=", username)
+    .where(`admin.password`, "=", password)
+    .executeTakeFirst()
+  if (response === undefined){
+    return false
+  }
+  return true
 }
 
 export async function deleteItem(table: TableKey, id: number) {
