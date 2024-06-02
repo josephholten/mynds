@@ -8,7 +8,6 @@ export const config = {
 
 export async function middleware(req: NextRequest) {
   const basicAuth = req.headers.get('authorization')
-  const url = req.nextUrl
 
   if (!basicAuth) {
     // Prompt for authentication
@@ -20,7 +19,7 @@ export async function middleware(req: NextRequest) {
     });
   }
 
-  if (basicAuth) {
+  else {
     const authValue = basicAuth.split(' ')[1]
     const [user, pwd] = atob(authValue).split(':')
     
@@ -28,7 +27,4 @@ export async function middleware(req: NextRequest) {
         return NextResponse.next()
     }
   }
-  url.pathname = '/api/auth'
-
-  return NextResponse.rewrite(url)
 }
