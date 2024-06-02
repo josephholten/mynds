@@ -65,6 +65,7 @@ interface Database {
   team: TeamTable
   events: EventsTable
   admin: AdminTable
+  members: MembersTable
 }
 
 const db = createKysely<Database>()

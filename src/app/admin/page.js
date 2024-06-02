@@ -7,7 +7,6 @@ import "/src/app/globals.css";
 import { editEvent, getAllEvents, getAllTeam, deleteItem, editTeam, editActiveMembers } from "/src/app/actions"
 import deleteIcon from '/src/app/images/delete-pad.svg'
 import editIcon from '/src/app/images/edit.svg'
-import Head from 'next/head';
 
 // import {Headline} from "/src/app/components"
 function Headline({ children }) {
@@ -283,7 +282,7 @@ function TeamList({setEditState}) {
   </div>)
 }
 
-export function ActiveMembers() {
+function ActiveMembers() {
   return (<div className='w-full'>
     <Headline>Active Members</Headline>
     <form action={editActiveMembers}>
