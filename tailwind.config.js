@@ -9,7 +9,8 @@ module.exports = {
     extend: {
       colors: {
         "akzent-dunkel": "#660530",
-        "primaer": "#970757"
+        "primaer": "#970757",
+        'background': '#fef4e8'
       },
       fontFamily: {
         "headline": ["BestLight"],

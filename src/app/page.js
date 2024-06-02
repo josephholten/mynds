@@ -105,8 +105,12 @@ async function Events(props) {
         {eventsFuture.length == 0 && (
         <div>
           <Headline>New Events</Headline>
-          <div className='mt-32 mb-48'>
-            <Headline>Coming Soon!</Headline>
+          <div className='flex justify-center'>
+            <div className='w-[50%] text-center aspect-square flex items-center align-center justify-center border-2 border-background rounded-md'>
+              <div className='font-headline text-2xl'>
+                Coming Soon!
+              </div>
+            </div>
           </div>
         </div>)}
       <div className='flex flex-col items-center mt-16'>
