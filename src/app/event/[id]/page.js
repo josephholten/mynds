@@ -1,5 +1,7 @@
 import "/src/app/globals.css";
 import {CalendarLink} from "./CalendarLink"
+import { getAllEvents, getEvent } from "/src/app/actions"
+import Image from 'next/image'
 
 function DateReformater(date) {
   console.log(date)
@@ -25,27 +27,20 @@ export async function getStaticProps({ params }) {
 */
 
 export async function generateStaticParams() {
+  const events = await getAllEvents()
   return events.map((event) => ({
-    event: event.name.toLowerCase().replace(" ", "-"),
+    id: event.id.toString(),
   }))
 }
 
-export default function EventPage({ params }){
-  const event_path = params.event
-  const matched = events.filter(ev => ev.name.toLowerCase() == event_path.replace("-", " "))
-  const event = matched[0]
-
-  if (!event) return <p>No Event Found!</p>;
-
+export default async function EventPage({ params }){
+  const { id } = params
+  console.log(id)
+  const event = await getEvent(id)
   const currentDate = new Date();
   currentDate.setHours(0, 0, 0, 0);
-  const [day, month, year] = event.date.split(".");
-  const eventDate = new Date(`${year}-${month}-${day}`);
-  var eventInPast = false
-  if (eventDate < currentDate){
-    eventInPast = true
-  }
-
+  const eventInPast = event.startdatetime < currentDate
+  const images = event.images.split(" ")
   
   return (
     <div className='flex flex-col gap-2 px-10 py-4 items-center'>
@@ -60,18 +55,19 @@ export default function EventPage({ params }){
             <CalendarLink eventData={{
               title: event.name,
               description: event.description,
-              startTime: DateReformater(event.date) + "T" + event.startTime + ":00+02:00",
-              endTime: DateReformater(event.date) + "T" + event.endTime + ":00+02:00",
+              startTime: event.startdatetime,
+              endTime: event.enddatetime,
               location: event.location
             }} />
           </>
         )}
         <div className="gap-6 max-w-screen-sm">
-            {event.img_src.map(img => (
+            {images.map(img => (
               <div key={img} className="max-w-screen-sm px-2">
-                <img src={"/events/"+img} alt={`Bilder von ${event.name}`} width="100%" className="object-contain rounded-lg m-4"></img>
+                <Image src={img} alt={`Bild von ${event.name}`} width="400" height="400" className="object-contain rounded-lg m-4" />
               </div>
             ))}
         </div>
     </div>
-)}
+  )
+}

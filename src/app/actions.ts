@@ -207,6 +207,14 @@ export async function authenticateUser(username: string, password: string) {
   return true
 }
 
+export async function getEvent(id: number) {
+  return await db
+    .selectFrom("events")
+    .selectAll()
+    .where("id", "=", id)
+    .executeTakeFirst()
+}
+
 export async function deleteItem(table: TableKey, id: number) {
   await db
     .deleteFrom(table)
