@@ -57,7 +57,8 @@ export default async function EventPage({ params }){
               description: event.description,
               startTime: event.startdatetime,
               endTime: event.enddatetime,
-              location: event.location
+              location: event.location,
+              id: event.id,
             }} />
           </>
         )}

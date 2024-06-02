@@ -1,13 +1,9 @@
 "use client"
 
 export function CalendarLink({ eventData }) {
-  const { title, description, startTime, endTime, location } = eventData;
-  const event = title.toLowerCase().replace(" ", "-")
+  const { title, description, startTime, endTime, location, id } = eventData;
 
-  const formatTime = (time) => time.replace(/-|:|\.\d\d\d/g, '');
-
-  const googleUrl = `https://calendar.google.com/calendar/r/eventedit?text=${encodeURIComponent(title)}&dates=${formatTime(startTime)}/${formatTime(endTime)}&details=${encodeURIComponent(description)}&location=${encodeURIComponent(location)}`;
-  const microsoftUrl = `https://outlook.live.com/owa/?path=/calendar/action/compose&rru=addevent&startdt=${formatTime(startTime)}&enddt=${formatTime(endTime)}&subject=${encodeURIComponent(title)}&body=${encodeURIComponent(description)}&location=${encodeURIComponent(location)}`;
+  const googleUrl = `https://calendar.google.com/calendar/r/eventedit?text=${encodeURIComponent(title)}&dates=${startTime.toISOString()}/${endTime.toISOString()}&details=${encodeURIComponent(description)}&location=${encodeURIComponent(location)}`;
 
   // Apple ics file:
   function handleAddEvent() {
@@ -32,9 +28,9 @@ export function CalendarLink({ eventData }) {
       'END:DAYLIGHT',
       'END:VTIMEZONE',
       'BEGIN:VEVENT', //now event stuff
-      `URL:localhost:3000/events/${event}`,
-      `DTSTART;TZID=Europe/Berlin:${formatTime(startTime).split("+")[0]}`,
-      `DTEND;TZID=Europe/Berlin:${formatTime(endTime).split("+")[0]}`,  
+      `mynds-campus.de/event/${id}`,
+      `DTSTART;TZID=Europe/Berlin:${startTime.toISOString()}`,
+      `DTEND;TZID=Europe/Berlin:${endTime.toISOString()}`,
       `SUMMARY:${title}`,    // Event title
       `DESCRIPTION:${description}`, 
       `LOCATION:${location}`, 
