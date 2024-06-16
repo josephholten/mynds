@@ -118,9 +118,13 @@ async function Events(props) {
       <div className='flex flex-col items-center mt-16'>
         <Headline>What we do</Headline>
         <div className='max-w-prose mb-6'>
-          Hier ein kurzer Text über die vergangenen Events! Wir hatten alle ganz viel Spaß.
-          Wenn ihr bei einem der tollen Events mitmachen wollt, registriert euch bitte davor,
-          indem ihr auf das Event klickt und dann dem Link folgt.
+        <div>
+          At mynds, an initiative by the University of Mannheim, we are dedicated to empowering women in business. Our mission is to support women across all fields of work by providing opportunities for growth, learning, and connection. Through a variety of networking events, interactive workshops, and inspiring speeches, we strive to create an environment where women can thrive, share experiences, and build lasting professional relationships.
+        </div>
+        <div>
+          Join us in shaping a future where women are leaders, innovators, and pioneers in the workplace! 
+          You can get a glimpse into what we do below, where we highlight our latest events.
+        </div>
         </div>
         <div className="grid grid-cols-2 justify-center gap-6">
           {eventsPast}
