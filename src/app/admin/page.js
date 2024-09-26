@@ -95,7 +95,7 @@ function EventEditor({editState, setEditState}) {
         />
         <TextInput 
           name="images" 
-          placeholder="http://example.com/img1 http://example.com/img2"
+          placeholder="https://postimg.cc/img1 https://postimg.cc/img2"
           label="Image URL(s)"
           value={editState.images}
           onChange={e => setEditState({...editState, images: e.target.value})}
@@ -117,7 +117,7 @@ function EventEditor({editState, setEditState}) {
         />
         <TextInput
           name="registration_url"
-          placeholder="http://docs.google.com/forms/example"
+          placeholder="http://docs.google.com/forms/example (http:// Ist notwendig!!!)"
           label="Registration URL"
           value={editState.registration_url}
           onChange={e => setEditState({...editState, registration_url: e.target.value})}

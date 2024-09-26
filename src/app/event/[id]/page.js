@@ -24,6 +24,7 @@ export default async function EventPage({ params }){
   return (
     <div className='flex flex-col gap-2 px-10 py-4 items-center'>
       <div className="font-bold text-center text-xl">{event.name}</div>
+      <div className="italic text-center text-lg">@{event.location}</div>
       <div className="italic text-center text-lg">{formatDateTime(event.startdatetime)}</div>
       {eventInPast ? (
           <div>{event.description_past}</div>

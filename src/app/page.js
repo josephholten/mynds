@@ -74,16 +74,22 @@ async function Events(props) {
 
   const events = await getAllEvents()
 
+  //console.log(events)
+
   const eventsDataPast = events.filter(event => event.startdatetime < currentDate)
   const eventsDataFuture = events.filter(event => event.startdatetime >= currentDate)
 
-  const formatDateTime = (dt) => (`${dt.getDay()}.${dt.getMonth()}.${dt.getYear()}, ${dt.getHours()}:${dt.getMinutes()}`)
+  const formatDateTime = (dt) => {
+    const pad = (num) => num.toString().padStart(2, '0');
+    return `${dt.getDate()}.${dt.getMonth()+1}.${dt.getFullYear()}, ${pad(dt.getUTCHours())}:${pad(dt.getUTCMinutes())}`;
+  } 
 
   const formatEvent = (event, description) => (
     <div className="flex flex-col items-center" key={event.id}>
       <Link href={`/event/${event.id}`}>
         <div className="h-16 flex flex-col justify-center">
           <div className="font-bold text-center text-xl">{event.name}</div>
+          <div className="italic text-center text-lg">@{event.location}</div>
           <div className="italic text-center text-lg">{formatDateTime(event.startdatetime)}</div>
         </div>
         <Image src={event.images.split(" ")[0]} alt="event" className="object-contain rounded-lg mt-5 mb-3" width={1000} height={1000} />
