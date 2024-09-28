@@ -9,9 +9,9 @@ export function TopBar() {
         <Image src={logoImage} alt="logo" priority={true} />
       </div>
       <div className='flex justify-end gap-x-7 font-headline font-bold'>
-        <a href="#about">About Us</a>
-        <a href="#events">Events</a>
-        <a href="#team">Team</a>
+        <a href="/#about">About Us</a>
+        <a href="/#events">Events</a>
+        <a href="/#team">Team</a>
       </div>
     </div>
   );

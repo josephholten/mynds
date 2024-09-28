@@ -20,6 +20,10 @@
   scroll-behavior: smooth;
 }
 
+html {
+  scroll-padding-top: 80px; /* Adjust this value to match the height of your TopBar */
+}
+
 body {
   color: var(--text-color);
   background: var(--background);

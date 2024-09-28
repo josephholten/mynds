@@ -92,7 +92,7 @@ async function Events(props) {
           <div className="italic text-center text-lg">@{event.location}</div>
           <div className="italic text-center text-lg">{formatDateTime(event.startdatetime)}</div>
         </div>
-        <Image src={event.images.split(" ")[0]} alt="event" className="object-contain rounded-lg mt-5 mb-3" width={1000} height={1000} />
+        <Image src={event.images.split(" ")[0]} alt="event" className="object-contain rounded-lg mt-20 sm:mt-16 md:mt-10 lg:mt-4 mb-3" width={1000} height={1000} />
         <div>{description}</div>
       </Link>
     </div>
@@ -106,8 +106,10 @@ async function Events(props) {
       {eventsFuture.length !== 0 && (
         <div>
           <Headline>Upcoming Events</Headline>
+          <div className='pt-14 sm:pt-12 md:pt-8 lg:pt-4'>
           <div className="grid grid-cols-2 justify-center gap-6 ">
             {eventsFuture}
+          </div>
           </div>
         </div>)}
         {eventsFuture.length == 0 && (
